@@ -1,0 +1,20 @@
+/* this is the custom stylesheet */
+
+body {
+	background-color:cadetblue;
+}
+
+#login {
+	margin-top: 100px;
+	border: 1px #ccc solid;
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+	background-color: white;
+}
+
+#login_error {
+	margin-top: 20px;
+	color: firebrick;
+	border-radius: 5px;
+}
