@@ -1,20 +1,17 @@
 /* this is the custom stylesheet */
 
-body {
-	background-color:cadetblue;
+#login_form {
+	margin-top: 100px;
+	border: solid 1px gray;
 }
 
-#login {
-	margin-top: 100px;
-	border: 1px #ccc solid;
-	padding: 20px;
-	border-radius: 5px;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
-	background-color: white;
+#form_fieldset {
+	margin: 10px;
 }
 
 #login_error {
-	margin-top: 20px;
-	color: firebrick;
+	color: red;
 	border-radius: 5px;
+	margin-top: 20px;
+	padding: 2px;
 }
