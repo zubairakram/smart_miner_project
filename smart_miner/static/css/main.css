@@ -1,17 +1,57 @@
 /* this is the custom stylesheet */
 
-#login_form {
-	margin-top: 100px;
-	border: solid 1px gray;
+body {
+    background-color: cadetblue;
 }
 
-#form_fieldset {
-	margin: 10px;
+.container {
+    background-color: white;
+}
+
+#main {
+    margin-top: 20px;
+    padding: 20px;
+}
+
+#form {
+    padding: 30px;
+    border: lightgray solid 1px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px whitesmoke inset;
+}
+
+#form legend {
+    font-size: 2.5em;
 }
 
 #login_error {
-	color: red;
-	border-radius: 5px;
-	margin-top: 20px;
-	padding: 2px;
+    margin-top: 20px;
+    padding-left: 10px;
+    color: maroon;
+    border-radius: 5px;
+}
+
+#intro img {
+    float: left;
+    margin-right: 10px;
+    height: 40px;
+}
+
+
+/* footer styles */
+
+#footer {
+    color: white;
+    background-color: black;
+    padding: 10px;
+    margin-top: 115px;
+}
+
+#footer div {
+    padding: 5px;
+}
+
+#footer a {
+    color: white;
+    text-decoration: none;
 }

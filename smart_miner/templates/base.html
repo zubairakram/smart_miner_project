@@ -1,31 +1,24 @@
 <!doctype html>
-<html>
+<html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content = "IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>{% block title %} Smart Miner {% endblock %}</title> 
+    <title>{% block title %} Smart Miner | {% endblock %}</title>
 
-{% load staticfiles%}
+    {% load staticfiles%}
 
-<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-<link href="{% static 'css/main.css' %}" rel="stylesheet">
-<link href="{% static 'images/icon.png' %}" rel="shortcut icon">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    <link href="{% static 'images/icon.png' %}" rel="shortcut icon">
 
 </head>
+
 <body>
-	<div class="container">
-	
-	{% block content %}
-	{% endblock %}
-	
-	</div>
 
-	<script src="{% static 'js/jquery.min.js' %}"></script>
-	<script src="{% static 'js/bootstrap.min.js' %}"></script>
-	<script src="{% static 'js/main.js' %}"></script>
 
-</body>
+    <div class="container">
 
-</html>
+        {% block content %} {% endblock %} {% include "footer.html" %}
