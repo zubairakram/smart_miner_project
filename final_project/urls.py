@@ -20,8 +20,9 @@ from smart_miner import views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    
     url(r'^$', views.Login, name='login'),
     url(r'^logout/$', views.Logout, name='logout'),
-    url(r'^auth/$', views.auth_view, name='auth'),
+    #url(r'^auth/$', views.auth_view, name='auth'),
     url(r'^home/$', views.home, name='home'),
 ]

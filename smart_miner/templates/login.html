@@ -1,12 +1,12 @@
 {% extends "base.html" %} {% load crispy_forms_tags %} {% load staticfiles %} {% block title %} {{ block.super }} Login {% endblock%} {% block content %}
 
-<div id="main_body">
+<div id="main_body" class="row">
 
 
     <div id="intro" class="col-md-7">
         <h1>
 		<img src="{% static 'images/icon.png' %}" class="img-responsive"
-			alt="Smart Miner Logo"> Welcome to Smart Miner
+			alt="Smart Miner Logo">  Welcome to Smart Miner
 	</h1>
         <hr>
         <p>Smart Miner is a web application which will provide the facility to implement the different Data Mining algorithms to its user.</p>
@@ -19,7 +19,7 @@
     </div>
     <div id='form' class="col-md-4 col-md-offset-1">
         <div id='form_fieldset' class="row">
-            <form method="POST" action="{% url 'auth' %}">
+            <form method="POST" action="{% url 'login' %}">
                 {% csrf_token %}
                 <fieldset>
                     <legend>Smart Miner Login</legend>
@@ -35,9 +35,9 @@
 
         {% if error %}
 
-        <div id="login_error" class="row bg-danger">
+        <div id="error" class="row alert alert-danger" role="alert">
             <h5>
-			<span class="glyphicon glyphicon-remove-circle"></span> {{ error }}
+			<span class="glyphicon glyphicon-remove-circle"></span> <b>Alert!:</b> {{ error }}
 		</h5>
         </div>
 

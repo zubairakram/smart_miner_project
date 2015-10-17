@@ -5,38 +5,38 @@ from smart_miner.forms import LoginForm
 from django.http.response import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 
+
 def Login(request):
     form = LoginForm(request.POST or None)
     context = {
                'form' : form,
                'error': '',
     }
-    return render(request, 'login.html', context)
-
-def auth_view(request):
-    form = LoginForm(request.POST or None)
-    context = {
-               'form' : form,
-               'error': '',
-    }
     
-    username = request.POST.get('username', '')
-    password = request.POST.get('password', '')
-    user = authenticate(username=username, password=password)
-    
-    if user is not None:
-        if user.is_active:
-            login(request, user)
-            
-            #return render(request, 'home.html', {})
-            return HttpResponseRedirect('/home/')
+    # if method is POST 
+    if request.method == "POST":
+        username = request.POST.get('username', '')
+        password = request.POST.get('password', '')
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect('/')
+            else:
+                context['error'] = 'User is disabled'
+                return render(request, 'login.html', context)
         else:
-            context['error'] = 'User is disabled'
+            context['error'] = "Invalid Username / Password Please re-enter!"
             return render(request, 'login.html', context)
-    else:
-        context['error'] = "username/password is incorrect!"
-        return render(request, 'login.html', context)
     
+    # if method is GET
+    else:
+        if not request.user.is_authenticated():
+            return render(request, 'login.html', context)
+        else:
+            return HttpResponseRedirect('/home/')
+        
+
     
 def Logout(request):
     logout(request)
