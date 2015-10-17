@@ -1,5 +1,7 @@
 {% extends "base.html" %} {% load crispy_forms_tags %} {% load staticfiles %} {% block title %} {{ block.super }} Login {% endblock%} {% block content %}
-<div id="main" class="row">
+
+<div id="main_body">
+
 
     <div id="intro" class="col-md-7">
         <h1>
@@ -17,7 +19,7 @@
     </div>
     <div id='form' class="col-md-4 col-md-offset-1">
         <div id='form_fieldset' class="row">
-            <form method="POST" action="">
+            <form method="POST" action="{% url 'auth' %}">
                 {% csrf_token %}
                 <fieldset>
                     <legend>Smart Miner Login</legend>
@@ -27,7 +29,6 @@
                 <button class="btn btn-primary" type="submit">
                     <span class="glyphicon glyphicon-log-in"></span> <b>Login</b>
                 </button>
-
             </form>
         </div>
 
@@ -47,7 +48,6 @@
     <!-- /form -->
 
 </div>
-<!-- header -->
-
+<!-- /main_body -->
 {% endblock %}
 <!-- /content -->

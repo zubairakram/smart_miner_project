@@ -46,6 +46,8 @@ INSTALLED_APPS = (
     'smart_miner',
 )
 
+LOGIN_URL = '/'
+
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

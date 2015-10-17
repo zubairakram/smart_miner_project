@@ -19,8 +19,9 @@ from django.contrib import admin
 from smart_miner import views
 
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),   
-    url(r'^$', views.login, name='login'),
-    url(r'hello/$', views.hello , name='hello'),
-    
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^$', views.Login, name='login'),
+    url(r'^logout/$', views.Logout, name='logout'),
+    url(r'^auth/$', views.auth_view, name='auth'),
+    url(r'^home/$', views.home, name='home'),
 ]
