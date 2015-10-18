@@ -1,53 +1,52 @@
-{% extends "base.html" %} {% load crispy_forms_tags %} {% load staticfiles %} {% block title %} {{ block.super }} Login {% endblock%} {% block content %}
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
 
-<div id="main_body" class="row">
+{% block title %} {{ block.super }} Login {% endblock%}
 
+{% block content %}
 
-    <div id="intro" class="col-md-7">
-        <h1>
-		<img src="{% static 'images/icon.png' %}" class="img-responsive"
-			alt="Smart Miner Logo">  Welcome to Smart Miner
-	</h1>
-        <hr>
-        <p>Smart Miner is a web application which will provide the facility to implement the different Data Mining algorithms to its user.</p>
-        <p>
-            The algorithms include <em>&quot;1R&quot;, &quot;Mean Imputation&quot;,
-			Hot Deck Imputation&quot;</em> and <em>&quot;Binning&quot;</em>.
-        </p>
-        <p>Please enter your login information to use the application</p>
-
-    </div>
-    <div id='form' class="col-md-4 col-md-offset-1">
-        <div id='form_fieldset' class="row">
-            <form method="POST" action="{% url 'login' %}">
-                {% csrf_token %}
-                <fieldset>
-                    <legend>Smart Miner Login</legend>
-                    {{ form|crispy }}
-                </fieldset>
-
-                <button class="btn btn-primary" type="submit">
-                    <span class="glyphicon glyphicon-log-in"></span> <b>Login</b>
-                </button>
-            </form>
-        </div>
-
-
-        {% if error %}
-
-        <div id="error" class="row alert alert-danger" role="alert">
-            <h5>
-			<span class="glyphicon glyphicon-remove-circle"></span> <b>Alert!:</b> {{ error }}
-		</h5>
-        </div>
-
-        {% endif %}
-        <!-- /error -->
-
-    </div>
-    <!-- /form -->
+<div id="intro" class="col-md-7">
+    <h1>Welcome to Smart Miner</h1>
+    <hr>
+    <p>Smart Miner is a web application which will provide the facility to implement the different Data Mining algorithms to its user.</p>
+    <p>
+        The algorithms include <em>&quot;1R&quot;, &quot;Mean Imputation&quot;,
+				Hot Deck Imputation&quot;</em> and <em>&quot;Binning&quot;</em>.
+    </p>
+    <p>Please enter your login information to use the application</p>
 
 </div>
-<!-- /main_body -->
+<div id='form' class="col-md-4 col-md-offset-1">
+    <div id='form_fieldset' class="row">
+        <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Smart Miner Login</legend>
+                {{ form|crispy }}
+            </fieldset>
+
+            <button class="btn btn-primary" type="submit">
+                <span class="glyphicon glyphicon-log-in"></span> <b>Login</b>
+            </button>
+        </form>
+    </div>
+
+
+    {% if error %}
+
+    <div id="error" class="row alert alert-danger" role="alert">
+        <h5>
+				<span class="glyphicon glyphicon-remove-circle"></span> <b>Alert!:</b>
+				 {{ error }}
+			</h5>
+    </div>
+
+    {% endif %}
+    <!-- /error condition -->
+
+</div>
+<!-- /form -->
+
 {% endblock %}
 <!-- /content -->

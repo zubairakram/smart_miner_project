@@ -1,9 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 
-from smart_miner.forms import LoginForm
-from django.http.response import HttpResponseRedirect
-from django.contrib.auth.decorators import login_required
+from smart_miner.forms import LoginForm, UploadForm
 
 
 def Login(request):
@@ -34,7 +34,7 @@ def Login(request):
         if not request.user.is_authenticated():
             return render(request, 'login.html', context)
         else:
-            return HttpResponseRedirect('/home/')
+            return HttpResponseRedirect('/upload/')
         
 
     
@@ -43,5 +43,27 @@ def Logout(request):
     return render(request, 'logout.html', {})
 
 @login_required
-def home(request):
-    return render(request, 'home.html', {})
+def upload_data(request):
+    form = UploadForm(request.POST or None)
+    context = {"form": form}
+    return render(request, 'upload.html', context)
+
+@login_required
+def classify_data(request):
+    return render(request, 'classify.html', {})
+
+@login_required
+def missing_values(request):
+    return render(request, 'missing.html', {})
+
+@login_required
+def remove_noise(request):
+    return render(request, 'noise.html', {})
+
+@login_required
+def generate_report(request):
+    return render(request, 'report.html', {})
+
+
+
+

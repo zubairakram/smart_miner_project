@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}
+	{{ block.super }}
+	{% block function %}
+	{% endblock %}
+{% endblock%}
+
+{% block content %}
+
+<div class="col-sm-3 col-md-2">
+    <ul class="nav nav-pills nav-stacked ">
+        <li {% block upload %}{% endblock %}><a href="{% url 'upload' %}"> Upload Data</a></li>
+        <li {% block classify %}{% endblock %}><a href="{% url 'classify' %}">Classify Data</a></li>
+        <li {% block missing %}{% endblock %}><a href="{% url 'missing' %}">Missing Value</a></li>
+        <li {% block noise %}{% endblock %}><a href="{% url 'noise' %}">Remove Noise</a></li>
+        <li {% block report %}{% endblock %}><a href="{% url 'report' %}">Generate Report</a></li>
+    </ul>
+</div>
+<!--/sidebar-->
+<div class="col-sm-9 col-md-10">
+    {% block description %} write description here {% endblock %} {% block algo %} this tag should be replaced {% endblock %}
+</div>
+<!--/algoarea-->
+{% endblock %}

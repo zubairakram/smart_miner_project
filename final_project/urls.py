@@ -21,8 +21,12 @@ from smart_miner import views
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     
+    # links related to data miner
     url(r'^$', views.Login, name='login'),
     url(r'^logout/$', views.Logout, name='logout'),
-    #url(r'^auth/$', views.auth_view, name='auth'),
-    url(r'^home/$', views.home, name='home'),
+    url(r'^upload/$', views.upload_data, name='upload'),
+    url(r'^classify/$', views.classify_data, name='classify'),
+    url(r'^missing/$', views.missing_values, name='missing'),
+    url(r'^noise/$', views.remove_noise, name='noise'),
+    url(r'^report/$', views.generate_report, name='report'),
 ]
