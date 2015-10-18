@@ -12,7 +12,6 @@ class Loader:
     def __init__(self):
         pass
     
-
 # Data Classification Algorithm
 class ClassifyData:
     """
