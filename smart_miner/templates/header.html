@@ -14,6 +14,9 @@
 				<li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>				
 			{% else %}
 				<li><a href="#">Hi! <b>{{ user.first_name }} {{ user.last_name }}</b></a></li>
+				{% if user.is_superuser%}
+					<li><a href="/admin/">admin</a></li>					
+				{% endif %}
 				<li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 			{% endif %}
 			</ul>

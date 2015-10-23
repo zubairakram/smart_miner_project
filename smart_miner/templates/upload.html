@@ -17,14 +17,10 @@
 
 {% block algo %} 
 <div id='form' class="col-md-6">
-    <div id='form_fieldset' class="row">
-        <form method="POST" action="{% url 'upload' %}">
+    <div id='form_fieldset' class="row" style="margin-bottom: 20px;">
+        <form method="POST" action="{% url 'upload' %}" enctype="multipart/form-data">
             {% csrf_token %}
-            <fieldset>
-                <legend>Upload Data</legend>
                 {{ form|crispy }}
-            </fieldset>
-
             <button class="btn btn-primary" type="submit">
                 <span class="glyphicon glyphicon-upload"></span> <b>Upload</b>
             </button>
@@ -34,13 +30,20 @@
 
     {% if error %}
 
-    <div id="error" class="row alert alert-danger" role="alert">
+    <div class="row alert alert-danger" role="alert">
         <h5>
-				<span class="glyphicon glyphicon-remove-circle"></span> <b>Alert!:</b>
+				<span class="glyphicon glyphicon-remove-circle"></span> <b>Error! :</b>
 				 {{ error }}
 			</h5>
     </div>
-
+    {% elif success %}
+	<div class="row alert alert-success" role="alert">
+        <h5>
+				<span class="glyphicon glyphicon-ok"></span> <b>Success! :</b>
+				 {{ success }}
+			</h5>
+    </div>
+    
     {% endif %}
     <!-- /error condition -->
 

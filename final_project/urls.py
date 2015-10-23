@@ -16,17 +16,19 @@ Including another URLconf
 
 from django.conf.urls import include, url
 from django.contrib import admin
-from smart_miner import views
+from django.contrib.auth.decorators import login_required
+
+from smart_miner.views import user, classify, missing, loader, noise, report
+
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    
-    # links related to data miner
-    url(r'^$', views.Login, name='login'),
-    url(r'^logout/$', views.Logout, name='logout'),
-    url(r'^upload/$', views.upload_data, name='upload'),
-    url(r'^classify/$', views.classify_data, name='classify'),
-    url(r'^missing/$', views.missing_values, name='missing'),
-    url(r'^noise/$', views.remove_noise, name='noise'),
-    url(r'^report/$', views.generate_report, name='report'),
+
+    url(r'^$', user.UserLogin.as_view(), name='login'),
+    url(r'^logout/$', user.UserLogout.as_view(), name='logout'),
+    url(r'^upload/$', login_required(loader.Loader.as_view()), name='upload'),
+    url(r'^classify/$', login_required(classify.Classify.as_view()), name='classify'),
+    url(r'^missing/$', login_required(missing.Missing.as_view()), name='missing'),
+    url(r'^noise/$', login_required(noise.Noise.as_view()), name='noise'),
+    url(r'^report/$', login_required(report.Report.as_view()), name='report'),
 ]
