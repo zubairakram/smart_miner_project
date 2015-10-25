@@ -4,12 +4,10 @@
 
 {% block upload %} class="active" {% endblock %}
 
-
-
-{% block description %} 
+{% block description %}
 
 <h1>Uploader</h1>
-<p>Please choose file from your computer to upload data in the database.</p>
+<p>Please choose file from your computer to upload data for processing.</p>
 <p>Note: file format should be CSV</p>
 
 {% endblock %}
@@ -43,7 +41,7 @@
 				 {{ success }}
 			</h5>
     </div>
-    
+    <p>Click <a href="{% url 'display' %}">Here</a> to see the uploaded data.
     {% endif %}
     <!-- /error condition -->
 

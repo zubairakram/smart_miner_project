@@ -18,7 +18,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 
-from smart_miner.views import user, classify, missing, loader, noise, report
+from smart_miner.views import user, classify, missing, loader, noise, display
 
 
 urlpatterns = [
@@ -30,5 +30,6 @@ urlpatterns = [
     url(r'^classify/$', login_required(classify.Classify.as_view()), name='classify'),
     url(r'^missing/$', login_required(missing.Missing.as_view()), name='missing'),
     url(r'^noise/$', login_required(noise.Noise.as_view()), name='noise'),
-    url(r'^report/$', login_required(report.Report.as_view()), name='report'),
+    url(r'^display/$', login_required(display.Display.as_view()), name='display'),
+    url(r'^csv/$', display.write_csv, name="csv"),
 ]
