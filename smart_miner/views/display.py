@@ -14,10 +14,12 @@ class Display(View):
     def get(self, request):
         try:
             table = read_csv()
-            return render(request, self.template, {"table": table})
+            heading = table[0]
+            data = table[1:]
+            return render(request, self.template, {"heading": heading, "data": data})
         except:
             return render(request, self.template, {"alert": "no data exist to display"})
-        
+
 @login_required
 def write_csv(request):
     response = HttpResponse(content_type='text/csv')

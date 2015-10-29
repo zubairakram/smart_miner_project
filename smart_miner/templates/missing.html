@@ -4,6 +4,27 @@
 
 {% block missing %} class="active" {% endblock %}
 
-{% block description %} missing description {% endblock %}
+{% block description %}
+	<h1>Missing Values</h1>
+	<p>Please Select one method to apply on the data set.</p>
+{% endblock %}
 
-{% block algo %} missing algorithm {% endblock %}
+{% block algo %} 
+
+<form method="post" action="{% url 'missing' %}">
+<fieldset>
+<label class="radio-inline">
+	<input type="radio" name="imputation" value="mean_imputation" checked="checked">
+	Mean Imputation
+</label>
+<label class="radio-inline">
+	<input type="radio" name="imputation" value="hot_deck_imputation">
+	Hot Deck Imputation
+</label>
+</fieldset>
+<br>
+<br>
+
+<input class="btn btn-primary" type="submit" value="Calculate Missing Values">
+</form>
+{% endblock %}

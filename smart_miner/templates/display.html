@@ -21,15 +21,20 @@
 		</h5>
     </div>
     {% endif %}
-<table class="table table-bordered table-hover table-condensed table-responsive">
-{% for row in table %}
-	<tr>
-		<td>{{ forloop.counter }}</td>
-		{% for col in row %}
-		<td>{{ col }}</td>
-		{% endfor%}
-	</tr>
-{% endfor %}
-</table>
-	
+	<table class="table table-bordered table-hover table-condensed table-responsive">
+		<tr>
+		{% for item in heading %}
+			<th> {{ item }}</th>
+		{% endfor %}
+		</tr>
+		{% for row in data %}
+		<tr>
+			{% for col in row %}
+				<td> {{ col }} </td>
+			{% endfor%}
+		</tr>
+		{% endfor %}	
+	</table>
+
+<!-- /algo -->
 {% endblock %}
