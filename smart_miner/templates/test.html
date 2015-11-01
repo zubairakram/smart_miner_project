@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Smart Miner | layout</title>
+<title>SM | Missing Values</title>
 
 
 
@@ -15,9 +15,7 @@
 <link href="/static/images/icon.png" rel="shortcut icon">
 </head>
 
-
 <body>
-
 
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
@@ -31,8 +29,11 @@
 					<ul class="nav navbar-nav">
 
 						<li><a href="#">Hi! <b>Zubair Akram</b></a></li>
-						<li><a href="/logout/"><span class="glyphicon glyphicon-log-out"></span>
-								Logout</a></li>
+
+						<li><a href="/admin/">admin</a></li>
+
+						<li><a href="/logout/"><span
+								class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 
 					</ul>
 				</div>
@@ -49,13 +50,69 @@
 				<ul class="nav nav-pills nav-stacked ">
 					<li><a href="/upload/"> Upload Data</a></li>
 					<li><a href="/classify/">Classify Data</a></li>
-					<li><a href="/missing/">Missing Value</a></li>
+					<li class="active"><a href="/missing/">Missing Value</a></li>
 					<li><a href="/noise/">Remove Noise</a></li>
-					<li class="active"><a href="/report/">Generate Report</a></li>
+					<li><a href="/display/">Display Data</a></li>
 				</ul>
 			</div>
-			<!--/s-->
-			<div class="col-sm-9 col-md-10">report description report algorithm</div>
+			<!--/sidebar-->
+			<div class="col-sm-9 col-md-10">
+
+				<h1>Missing Values</h1>
+
+				<hr>
+
+				<p>This section allow you to detect missing values in your data
+					set, and then apply different algorithms to data set for filling up
+					missing values.</p>
+
+
+
+
+
+
+				<div class="alert alert-info" role="alert">
+					<h5>
+						<span class="glyphicon glyphicon-warning-sign"></span> <b>Heads
+							up:</b>
+					</h5>
+				</div>
+
+				<!-- /error condition -->
+
+				<form method="post" action="/missing/">
+					<input type='hidden' name='csrfmiddlewaretoken'
+						value='QaVofJhoKkKlmcZICs3jrSD8lXkDsavO' />
+					<fieldset>
+
+
+						<div id="div_id_choice_field" class="form-group">
+							<label for="id_choice_field_0"
+								class="control-label  requiredField"> Choice field<span
+								class="asteriskField">*</span>
+							</label>
+							<div class="controls ">
+								<div class="radio">
+									<label class=""> <input type="radio"
+										name="choice_field" id="id_choice_field_1" value="1">Mean
+										Imputation
+									</label>
+								</div>
+								<div class="radio">
+									<label class=""> <input type="radio"
+										name="choice_field" id="id_choice_field_2" value="2">Hot
+										Deck Imputation
+									</label>
+								</div>
+							</div>
+						</div>
+
+					</fieldset>
+					<br> <br> <input class="btn btn-primary" type="submit"
+						value="Calculate Missing Values">
+				</form>
+
+			</div>
 			<!--/algoarea-->
 
 
@@ -70,8 +127,8 @@
 			</div>
 			<div class="col-lg-12">
 				<a href="mailto:zubair616@gmail.com"><span
-					class="glyphicon glyphicon-envelope"></span> zubair616@gmail.com</a> | <a
-					href="mailto:mc140200017@vu.edu.pk">mc140200017@vu.edu.pk</a>
+					class="glyphicon glyphicon-envelope"></span> zubair616@gmail.com</a> |
+				<a href="mailto:mc140200017@vu.edu.pk">mc140200017@vu.edu.pk</a>
 
 			</div>
 			<div class="col-lg-12">
@@ -90,5 +147,4 @@
 	<script src="/static/js/main.js"></script>
 
 </body>
-
 </html>

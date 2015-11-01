@@ -1,30 +1,65 @@
 {% extends "layout.html" %}
+{% load crispy_forms_tags %}
 {% block function %}Missing Values{% endblock %}
 
 
 {% block missing %} class="active" {% endblock %}
 
-{% block description %}
+{% block heading%}
 	<h1>Missing Values</h1>
-	<p>Please Select one method to apply on the data set.</p>
 {% endblock %}
 
-{% block algo %} 
-
-<form method="post" action="{% url 'missing' %}">
-<fieldset>
-<label class="radio-inline">
-	<input type="radio" name="imputation" value="mean_imputation" checked="checked">
-	Mean Imputation
-</label>
-<label class="radio-inline">
-	<input type="radio" name="imputation" value="hot_deck_imputation">
-	Hot Deck Imputation
-</label>
-</fieldset>
-<br>
-<br>
-
-<input class="btn btn-primary" type="submit" value="Calculate Missing Values">
-</form>
+{% block description %}
+	<p>This section allow you to detect missing values in your data set, and then apply
+	different algorithms to data set for filling up missing values.</p>
 {% endblock %}
+{% block algo %}
+
+<div class="col-md-6">
+
+{% if not message %}
+
+	{% if info %}
+	
+	<div class="alert alert-info" role="alert">
+		<h5>
+			<span class="glyphicon glyphicon-info-sign"></span> <b>Heads up:</b> {{ info }}
+		</h5>
+	</div>
+	
+	{% elif error %}
+	<div class="alert alert-danger" role="alert">
+		<h5>
+			<span class="glyphicon glyphicon-remove-circle"></span> <b>Error:</b> {{ error }}
+		</h5>
+	</div>
+	
+	{% endif %}
+	<!-- alerts_if -->
+		
+	<p>Select method below and press "calculate missing values" button.
+	<form method="post" action="{% url 'missing' %}">
+		{% csrf_token %}
+		<fieldset>
+		{{ form|crispy }}
+		</fieldset>
+		<br>
+		<input class="btn btn-primary" type="submit" value="Calculate Missing Values">
+	</form>
+
+{% else %}
+	<div class="alert alert-success" role="alert">
+		<h5>
+			<span class="glyphicon glyphicon-ok"></span> <b>Congratulations!</b>
+			 {{ message }}
+		</h5>
+	</div>
+
+{% endif %}
+<!-- /mainif -->
+
+
+</div>
+{% endblock %}
+<!-- /blockalgo -->
+

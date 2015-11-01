@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.views.generic.base import View
-from smart_miner.views.loader import read_csv
+
+from smart_miner.views.loader import Loader
+
 
 class Miner(View):
-    table = read_csv()
+    table = Loader.read_csv()
     
     def hello(self):
         print("hello world")

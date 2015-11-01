@@ -31,5 +31,5 @@ urlpatterns = [
     url(r'^missing/$', login_required(missing.Missing.as_view()), name='missing'),
     url(r'^noise/$', login_required(noise.Noise.as_view()), name='noise'),
     url(r'^display/$', login_required(display.Display.as_view()), name='display'),
-    url(r'^csv/$', display.write_csv, name="csv"),
+    url(r'^csv/$', display.download_csv, name="csv"),
 ]

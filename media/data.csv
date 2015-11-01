@@ -1,7 +1,6 @@
-Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday
-Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday
-Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday
-Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday
-Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday
-Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday
-Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday
+Object ID,Name,Age,Sex,Blood Pressure,Cholesterol in mg/dl,Chest pain type,Defect type,Diagnosis
+1,Konrad Black,31,male,130,261.2,2.3,normal,absent
+2,Konrad Black,31,male,130,331.2,1,normal,absent
+3,Magda Doe,26,female,115,261.2,4,fixed,present
+4,Magda Doe,26,female,115,407.5,2.3,normal,absent
+5,Anna White,56,female,120,45,2,normal,absent

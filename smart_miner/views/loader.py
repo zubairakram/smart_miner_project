@@ -1,5 +1,4 @@
 import csv
-
 from django.shortcuts import render
 from django.views.generic.base import View
 
@@ -25,7 +24,7 @@ class Loader(View):
         self.context['error'] =''
         self.context['success']= ''
         
-    def __process_file(self, file):
+    def upload_csv(self, file):
         "csv file writer"
         with open(MEDIA_ROOT + 'data.csv', 'wb+') as fout:
             for i in file.chunks():
@@ -37,7 +36,8 @@ class Loader(View):
         self.context['form'] = form
     
         if form.is_valid():
-            self.__process_file(request.FILES['file'])
+            file = request.FILES['file']
+            self.upload_csv(file)
             self.context["success"] = 'Uploaded successfully!'
             return render(request, self.template, self.context)
         else:
@@ -49,10 +49,20 @@ class Loader(View):
             self.__reset_context()
             self.context['form'] = form
             return render(request, self.template, self.context)
-
-def read_csv():
-    'read csv file from media directory and return in the form of table'
-    file = MEDIA_ROOT+"data.csv"
-    with open(file) as fin:
-        return list(csv.reader(fin))
+    
+    @staticmethod
+    def read_csv():
+        'read csv file from media directory and return in the form of table'
+        file = MEDIA_ROOT+"data.csv"
+        with open(file) as fin:
+            return list(csv.reader(fin))
+    
+    @staticmethod
+    def write_csv(table):
+        file = MEDIA_ROOT + "data.csv"
+        with open(file, 'w') as fout:
+            csv_write = csv.writer(fout)
+            for i in table:
+                csv_write.writerow(i)
+    
         

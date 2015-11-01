@@ -7,3 +7,7 @@ class LoginForm(forms.Form):
 
 class UploadForm(forms.Form):
     file = forms.FileField()
+    
+class MissingForm(forms.Form):
+    CHOICES =   (('1', 'Mean Imputation'), ('2', 'Hot Deck Imputation'))
+    method = forms.ChoiceField(widget=forms.RadioSelect(), choices=CHOICES)

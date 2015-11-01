@@ -19,7 +19,14 @@
 </div>
 <!--/sidebar-->
 <div class="col-sm-9 col-md-10">
-    {% block description %} write description here {% endblock %} {% block algo %} this tag should be replaced {% endblock %}
+<div class="row">
+    {% block heading %} heading area {% endblock %}
+    <hr>
+    {% block description %} description area {% endblock %}
+
+	{% block algo %} alogrithm body {% endblock %}
+
+</div>
 </div>
 <!--/algoarea-->
 {% endblock %}

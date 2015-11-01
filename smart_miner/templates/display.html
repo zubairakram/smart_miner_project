@@ -3,8 +3,12 @@
 
 {% block display %} class="active" {% endblock %}
 
+{% block heading %}
+	<h1>Table view of data</h1>
+{% endblock %}
+
 {% block description %}
-<h1>Table view of Data</h1>
+
 {% if not alert %}
 <p>Click <a href="{% url 'csv' %}" target="_blank">here.</a> to download the data.</p>
  {% endif %}
