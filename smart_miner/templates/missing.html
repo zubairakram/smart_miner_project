@@ -50,10 +50,11 @@
 {% else %}
 	<div class="alert alert-success" role="alert">
 		<h5>
-			<span class="glyphicon glyphicon-ok"></span> <b>Congratulations!</b>
+			<span class="glyphicon glyphicon-star"></span> <b>Congratulations!</b>
 			 {{ message }}
 		</h5>
 	</div>
+	<p>click <a href="{% url 'display' %}">here</a> to view/download data.</p>
 
 {% endif %}
 <!-- /mainif -->

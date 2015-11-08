@@ -6,18 +6,31 @@ from statistics import mean, mode
 from smart_miner.forms import MissingForm
 from smart_miner.views.loader import Loader
 
+class MissingAbstract:
+    """
+    Abstract class for missing values algorithm containing class constructor
+    and method to be overridden in child class.
+    """
+    def __init__(self, table):
+        self.table = table
 
-class Missing(View):
-    template = 'missing.html'
-    form = MissingForm
+    def main(self):
+        """
+        main method uses helping methods and apply the algorithm in at data.
+        """
+        pass
     
-    ############ Mean imputation helping functions ##################
-    def calculate_value(self, row):
+    
+class MeanImputation(MissingAbstract):
+    """
+    Mean Imputation algorithm for resolving missing values.
+    """
+    def __calculate_value(self, row):
         """
-        Mean Imputation helping function
+        calculates mean or mode of the row according to situation
         """
-        row = [item for item in row if not (item == "" or item == "NULL" or item == 0)]
-        print(row)
+        
+        row = [item for item in row if not (item == "?" or item == "NULL" or item == "*")]
         value = ""
         try:
             row = [float(i) for i in row]
@@ -29,66 +42,137 @@ class Missing(View):
                 value = row[0]
         return value
     
-    def transpose(self, table):
+    def __transpose(self, table):
+        """
+        returns the transpose of the matrix.
+        """
         output = []
         for item in range(len(table[0])):
             column = [row[item] for row in table]
             output.append(column)
         return output
     
-    def impute_value(self, row):
+    def __impute_value(self, row):
+        """
+        imputes the missing values where require.
+        """
         try:
             row = [int(item) for item in row]
         except:
             pass
-        value = self.calculate_value(row)
+        value = self.__calculate_value(row)
         
         out_put = []
         for i in row:
-            if i == 0 or i == "" or i == "NULL":
+            if i == "*" or i == "?" or i == "NULL":
                 out_put.append(value)
             else:
                 out_put.append(i)
 
         return out_put
     
+    
+    def main(self):
+        """
+        Implements mean Imputation algorithm. by using helping functions
+        first calculates missing values and then impute into the empty spaces.
+        """         
         
-    def mean_imputation(self, table):
-        header = table[0]
-        data = table[1:]
-        
-        data = self.transpose(data)
+        self.table = self.__transpose(self.table)
         out_put = []
         
-        for row in data:
-            out_put.append(self.impute_value(row))
+        for row in self.table:
+            out_put.append(self.__impute_value(row))
         
-        out_put = self.transpose(out_put)
-        print(header)
-        result = []
-        result.append(header)
-        for i in out_put:
-            result.append(i)    
-        print(result)
-        Loader.write_csv(result)
+        out_put = self.__transpose(out_put)
+        return out_put
+        
+
+class HotDeckImputation(MissingAbstract):
+    """
+    Implements Hot Deck Imputation algorithm to resolve missing values in the data-set.
+    """
+    def __calculate_distance(self, m, n):
+        """
+        HOT DECK: calculates distance between two lists.
+        """
+        distance = 0
+        size = len(m)
+        for i in range(size):
+            if m[i] != n[i] or n[i] in ('?', '*', 'NULL'):
+                distance += 1
+        return distance
     
-    def hot_deck_imputation(self):
-        pass
+    
+    def __best_match(self, row, table):
+        """
+        HOT DECK: return the index of row having minimum distance with the respective row,
+        """
+        distances = []
+        table_size = len(table)
+        for i in range(table_size):
+            if table.index(row) != i:  # ignores itself
+                distance = self.__calculate_distance(row, table[i])
+                distances.append((distance, i))
+        return min(distances)[1]
+    
+    def __have_missing(self, row):
+        """
+        Return true is a row has missing value
+        """
+        if set(row) & set(("?", "*", "NULL")):
+            return True
+        else:
+            return False
+        
+    def __impute_value(self, m, n):
+        size = len(m)
+        for i in range(size):
+            if m[i] in ("*", "?", "NULL"):
+                m[i] = n[i]
+        return m
+    
+        
+    def main(self):
+        """
+        impute values in the rows.
+        """
+        
+        missing_indices = []  # record rows indices with missing index
+        for row in self.table:
+            if self.__have_missing(row):
+                missing_indices.append(self.table.index(row))
+        
+        while missing_indices:
+            for i in missing_indices:
+                if not self.__have_missing(self.table[i]):
+                    missing_indices.remove(i)
+                else:
+                    match = self.__best_match(self.table[i], self.table)
+                    impute_row = self.__impute_value(self.table[i], self.table[match])
+                    self.table[i] = impute_row
+                    
+        return self.table
+    
+    
     
 
+class Missing(View):
+    template = 'missing.html'
+    form = MissingForm
+    
     def __calculate_missings(self, table):
         """
-        calculate number of missing values in the data set.
+        MEAN: calculate number of missing values in the data set.
         """
         counter = 0
         for row in table:
             for item in row:
-                if item == "" or item == '0' or item == "NULL":
+                if item == "*" or item == '?' or item == "NULL":
                     counter += 1
-        
-        return counter 
+        return counter
     
-    
+
     def get(self, request):
         "every time read data from directory"
         table = Loader.read_csv()[1:]
@@ -112,11 +196,21 @@ class Missing(View):
         method = request.POST.get('method', '')
         table = Loader.read_csv()
         if form.is_valid():
+            result = [table[0]]
+            data = table[1:]
             if method == "1":
-                self.mean_imputation(table)
+                myobject = MeanImputation(data)
+                data = myobject.main()
+                for i in data:
+                    result.append(i)
+                Loader.write_csv(result)
                 return HttpResponseRedirect("/missing/")
             else:
-                self.hot_deck_imputation()
+                myobject = HotDeckImputation(data)
+                data = myobject.main()
+                for i in data:
+                    result.append(i)
+                Loader.write_csv(result)
                 return HttpResponseRedirect("/missing/")
         else:
             context = {
@@ -126,87 +220,20 @@ class Missing(View):
             return render(request, self.template, context)
         
 
-
 # unit tests
 if __name__ == '__main__':
-    table = [
-        ['zubair',  'akram',    '334',  'jhang',    'pakistan', '36508'],
-        ['uzair',   '',         '335',  'fsd',      '',         '12345'],
-        ['umair',   'akram',    '0',  '',         'pakistan', '67890'],
-        ['hamid',   'hameed',   '300',  'Null',      'usa',      '23245'],
-        ['ahmad',   'ahsan',    '364',  'jhang',      'pakistan', '76543'],
-    ]
     
-    table2 = [
-        ['zubair', 'uzair', 'umair', 'hamid', 'ahmad'],
-        ['akram', '', 'akram', 'hameed', 'ahsan'],
-        ['334', '335', '0', '300', '364'],
-        ['jhang', 'fsd', '', 'grw', 'jhang'],
-        ['pakistan', '', 'pakistan', 'usa', 'pakistan'],
-        ['36508', '12345', '67890', '23245', '76543']
+    table = [
+        ['Object ID', 'Name', 'Age', 'Sex', 'Blood Pressure', 'Cholesterol in mg/dl', 'Chest pain type', 'Defect type', 'Diagnosis'],
+        ['1', 'Konrad Black', '31', 'male', '130', 'NULL', 'NULL', 'NULL', 'NULL'],
+        ['2', 'Konrad Black', '31', 'male', '130', '331.2', '1', 'normal', 'absent'],
+        ['3', 'Magda Doe', '26', 'female', '115', '407.5', '4', 'fixed', 'present'],
+        ['4', 'Magda Doe', '26', 'female', '115', '407.5', '4', 'NULL', 'present'],
+        ['5', 'Magda Doe', '26', 'female', '115', '407.5', 'NULL', 'NULL', 'NULL'],
+        ['6', 'Magda Doe', '26', 'female', '115', '407.5', 'NULL', 'fixed', 'NULL'],
+        ['7', 'Anna White', '56', 'female', '120', '45', '2', 'normal', 'absent'],
     ]
-     
-#     def calculate_value(row):
-#         row = [item for item in row if not (item == "" or item == "NULL" or item == 0)]
-#         value = ""
-#         try:
-#             row = [int(i) for i in row]
-#             value = mean(row)
-#         except:
-#             try:
-#                 value = mode(row)
-#             except:
-#                 value = row[0]
-#         return value
-#     
-#     def transpose(table):
-#         output = []
-#         for item in range(len(table[0])):
-#             column = [row[item] for row in table]
-#             output.append(column)
-#         return output
-#     
-#     def impute_value(row):
-#         try:
-#             row = [int(item) for item in row]
-#         except:
-#             pass
-#         value = calculate_value(row)
-#         
-#         out_put = []
-#         for i in row:
-#             if i == 0 or i == "" or i == "NULL":
-#                 out_put.append(value)
-#             else:
-#                 out_put.append(i)
-# 
-#         return out_put
-#     
-#         
-#     def mean_imputation(table):
-#         table = transpose(table)
-#         out_put = []
-#         for row in table:
-#             out_put.append(impute_value(row))
-#             
-#         return transpose(out_put)
-#     
-# 
-#     for row in table:
-#         for item in row:
-#             print(item, '\t\t\t', end="")
-#         print()
-#     print()
-#  
-#     for row in mean_imputation(table):
-#         for item in row:
-#             print(item, '\t\t\t', end="")
-#         print()
- 
-#       
-# #     print(out_put)
-# #     for row in table:
-# #         for col in row: 
-# #             print(col)
-# #         
-#  
+    for i in table:
+        print(i)
+    print("-"*120)
+        

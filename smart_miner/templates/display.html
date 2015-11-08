@@ -10,7 +10,7 @@
 {% block description %}
 
 {% if not alert %}
-<p>Click <a href="{% url 'csv' %}" target="_blank">here.</a> to download the data.</p>
+<p>Click <a href="{% url 'csv' %}" target="_blank">here.</a> to download data.</p>
  {% endif %}
 {% endblock %}
 
@@ -28,7 +28,7 @@
 	<table class="table table-bordered table-hover table-condensed table-responsive">
 		<tr>
 		{% for item in heading %}
-			<th> {{ item }}</th>
+			<th style="background-color: teal; color: white;"> {{ item }}</th>
 		{% endfor %}
 		</tr>
 		{% for row in data %}
