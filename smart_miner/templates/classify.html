@@ -6,17 +6,20 @@
 <!-- Classify Algorithm -->
 
 {% block heading %}
-<h1>Classify Data</h1>
+	<h1>Classify Data</h1>
 {% endblock %}
 
 {% block description %} 
-<p>click below button to apply One-R algorithm for data classification</p>
+	<p>click below button to apply oneR algorithm for data classification</p>
 {% endblock %}
 
-{% block algo %} 
+{% block algo %}
+<div class="col-md-6">
+
 <form>
-
-<input class="btn btn-primary" type="submit" value="Classify">
-
+	{% csrf_token %}
+	<input class="btn btn-primary" type="submit" value="Classify">
 </form>
+
+</div>
 {% endblock %}

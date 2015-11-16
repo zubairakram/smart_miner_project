@@ -9,11 +9,57 @@
 {% endblock %}
 
 {% block description %} 
-	<p>By pressing below button you can apply binning algorithm on data set and can remove noise from it.</p>
+	<p>Select correct range for each field and press "Remove Noise" button.</p>
 {% endblock %}
 
 {% block algo %} 
+<div class="col-md-6">
 
-<form><input class="btn btn-primary" type="submit"></form>
 
+{% if success %}
+	<div class="row alert alert-success" role="alert">
+	      <h5>
+			<span class="glyphicon glyphicon-ok"></span> <b>Success! :</b>
+			 {{ success }}
+		</h5>
+	</div>
+	<p>click <a href="{% url 'display' %}">here</a> to view/download data.</p>
+
+{% elif message %}
+	<div class="row alert alert-warning" role="alert">
+	      <h5>
+			<span class="glyphicon glyphicon-alert"></span> <b>Alert! :</b>
+			 {{ message }}
+		</h5>
+	</div>
+	<p>click <a href="{% url 'missing' %}">here</a> to fill them.</p>
+	
+{% else %}
+
+	<form class="form" method="post" action="{% url 'noise' %}">
+		{% csrf_token %}
+		<table class="table table-responsive table-striped">
+			<thead>
+				<tr>
+					<th>Field</th>
+					<th>Minimum</th>
+					<th>Maximum</th>				
+				</tr>
+			</thead>
+			<tbody>
+			{% for i in fields %}
+				<tr>
+					<td>{{ i }}</td>
+					<td><input type="number" name="{{ i }}_min" placeholder="min" required></td>
+					<td><input type="number" name="{{ i }}_max" placeholder="max" required></td>
+				</tr>
+			{% endfor %}	
+			</tbody>
+		</table>
+		<br>
+		<input class="btn btn-primary" type="submit" value="Remove Noise">	
+	</form>
+	
+{% endif %}
+</div>
 {% endblock %}

@@ -36,15 +36,15 @@
 				 {{ error }}
 			</h5>
 	   </div>
-	   {% elif success %}
-	<div class="row alert alert-success" role="alert">
+	    {% elif success %}
+		<div class="row alert alert-success" role="alert">
 	       <h5>
 				<span class="glyphicon glyphicon-ok"></span> <b>Success! :</b>
 				 {{ success }}
 			</h5>
-	   </div>
-	   <p>Click <a href="{% url 'display' %}">Here</a> to see the uploaded data.</p>
-	   {% endif %}
+		</div>
+		<p>Click <a href="{% url 'display' %}">Here</a> to see the uploaded data.</p>
+	    {% endif %}
 	   <!-- /error condition -->
 
 </div>

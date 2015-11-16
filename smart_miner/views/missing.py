@@ -6,25 +6,39 @@ from statistics import mean, mode
 from smart_miner.forms import MissingForm
 from smart_miner.views.loader import Loader
 
-class MissingAbstract:
+
+class Miner:
     """
     Abstract class for missing values algorithm containing class constructor
     and method to be overridden in child class.
     """
     def __init__(self, table):
         self.table = table
-
+        
     def main(self):
         """
         main method uses helping methods and apply the algorithm in at data.
         """
         pass
     
+    def transpose(self, table):
+        """
+        returns the transpose of the matrix.
+        """
+        output = []
+        for item in range(len(table[0])):
+            column = [row[item] for row in table]
+            output.append(column)
+        return output
     
-class MeanImputation(MissingAbstract):
+    
+class MeanImputation(Miner):
     """
     Mean Imputation algorithm for resolving missing values.
     """
+    def __init__(self, table):
+        Miner.__init__(self, table)
+        
     def __calculate_value(self, row):
         """
         calculates mean or mode of the row according to situation
@@ -41,16 +55,6 @@ class MeanImputation(MissingAbstract):
             except:
                 value = row[0]
         return value
-    
-    def __transpose(self, table):
-        """
-        returns the transpose of the matrix.
-        """
-        output = []
-        for item in range(len(table[0])):
-            column = [row[item] for row in table]
-            output.append(column)
-        return output
     
     def __impute_value(self, row):
         """
@@ -78,20 +82,21 @@ class MeanImputation(MissingAbstract):
         first calculates missing values and then impute into the empty spaces.
         """         
         
-        self.table = self.__transpose(self.table)
+        table = self.transpose(self.table)
         out_put = []
         
-        for row in self.table:
+        for row in table:
             out_put.append(self.__impute_value(row))
         
-        out_put = self.__transpose(out_put)
-        return out_put
-        
+        return self.transpose(out_put)        
 
-class HotDeckImputation(MissingAbstract):
+class HotDeckImputation(Miner):
     """
     Implements Hot Deck Imputation algorithm to resolve missing values in the data-set.
     """
+    def __init__(self, table):
+        Miner.__init__(self, table)
+    
     def __calculate_distance(self, m, n):
         """
         HOT DECK: calculates distance between two lists.
@@ -200,18 +205,13 @@ class Missing(View):
             data = table[1:]
             if method == "1":
                 myobject = MeanImputation(data)
-                data = myobject.main()
-                for i in data:
-                    result.append(i)
-                Loader.write_csv(result)
-                return HttpResponseRedirect("/missing/")
             else:
                 myobject = HotDeckImputation(data)
-                data = myobject.main()
-                for i in data:
-                    result.append(i)
-                Loader.write_csv(result)
-                return HttpResponseRedirect("/missing/")
+            data = myobject.main()
+            for i in data:
+                result.append(i)
+            Loader.write_csv(result)
+            return HttpResponseRedirect("/missing/")
         else:
             context = {
                        'form': form,
