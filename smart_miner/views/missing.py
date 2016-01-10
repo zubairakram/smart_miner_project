@@ -9,8 +9,8 @@ from smart_miner.views.loader import Loader
 
 class Miner:
     """
-    Abstract class for missing values algorithm containing class constructor
-    and method to be overridden in child class.
+    Abstract class for data mining algorithms containing class constructor
+    common methods and abstract methods.
     """
     def __init__(self, table):
         self.table = table
@@ -23,7 +23,7 @@ class Miner:
     
     def transpose(self, table):
         """
-        returns the transpose of the matrix.
+        returns the transpose of a matrix.
         """
         output = []
         for item in range(len(table[0])):
@@ -99,7 +99,8 @@ class HotDeckImputation(Miner):
     
     def __calculate_distance(self, m, n):
         """
-        HOT DECK: calculates distance between two lists.
+        calculates distance between two lists 'm' and 'n'.
+        and return in the form of integer.
         """
         distance = 0
         size = len(m)
@@ -111,7 +112,7 @@ class HotDeckImputation(Miner):
     
     def __best_match(self, row, table):
         """
-        HOT DECK: return the index of row having minimum distance with the respective row,
+        Return the index of row having minimum distance with the respective row,
         """
         distances = []
         table_size = len(table)
@@ -123,14 +124,18 @@ class HotDeckImputation(Miner):
     
     def __have_missing(self, row):
         """
-        Return true is a row has missing value
+        perform set Intersection operation
+        Return true if a row has missing value else return false
         """
-        if set(row) & set(("?", "*", "NULL")):
+        if set(row) & set(("?", "*", "NULL")):  # set intersection operation
             return True
         else:
             return False
         
     def __impute_value(self, m, n):
+        """
+        This function impute value in the row if it has some missing value. 
+        """
         size = len(m)
         for i in range(size):
             if m[i] in ("*", "?", "NULL"):
@@ -142,8 +147,8 @@ class HotDeckImputation(Miner):
         """
         impute values in the rows.
         """
-        
-        missing_indices = []  # record rows indices with missing index
+
+        missing_indices = []  # record rows indices with missing values
         for row in self.table:
             if self.__have_missing(row):
                 missing_indices.append(self.table.index(row))
@@ -160,7 +165,7 @@ class HotDeckImputation(Miner):
         return self.table
     
     
-    
+# django view class Missing    
 
 class Missing(View):
     template = 'missing.html'
@@ -168,7 +173,7 @@ class Missing(View):
     
     def __calculate_missings(self, table):
         """
-        MEAN: calculate number of missing values in the data set.
+        calculate number of missing values in the data set.
         """
         counter = 0
         for row in table:
@@ -179,8 +184,10 @@ class Missing(View):
     
 
     def get(self, request):
-        "every time read data from directory"
-        table = Loader.read_csv()[1:]
+        """
+        serves http get request send by client.
+        """
+        table = Loader.read_csv()[1:]   # read file from media folder
         total_missings = self.__calculate_missings(table)
         if total_missings:
             context = {
@@ -196,7 +203,9 @@ class Missing(View):
         return render(request, self.template, context)
     
     def post(self, request):
-        "every time read data from directory"
+        """
+        serves http post request made by client.
+        """
         form = self.form(request.POST or None)
         method = request.POST.get('method', '')
         table = Loader.read_csv()

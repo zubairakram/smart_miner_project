@@ -22,8 +22,10 @@ from smart_miner.views import user, classify, missing, loader, noise, display
 
 
 urlpatterns = [
+    # django admin url
     url(r'^admin/', include(admin.site.urls)),
 
+    # data miner urls
     url(r'^$', user.UserLogin.as_view(), name='login'),
     url(r'^logout/$', user.UserLogout.as_view(), name='logout'),
     url(r'^upload/$', login_required(loader.Loader.as_view()), name='upload'),

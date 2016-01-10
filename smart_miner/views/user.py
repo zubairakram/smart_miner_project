@@ -6,6 +6,8 @@ from django.views.generic import View
 from smart_miner.forms import LoginForm
 
 
+# django view class provides login interface
+
 class UserLogin(View):
     template = 'login.html'
     form = LoginForm
@@ -43,7 +45,9 @@ class UserLogin(View):
             self.context['error'] = "Invalid Username / Password Please re-enter!"
             return render(request, self.template, self.context)
     
-            
+
+# django view class render logout page and greeting
+
 class UserLogout(View):
     template = 'logout.html'
     

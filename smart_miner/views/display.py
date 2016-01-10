@@ -7,7 +7,11 @@ from django.views.generic.base import View
 from smart_miner.views.loader import Loader
 
 
+# django view class
 class Display(View):
+    """
+    display the data saved in media folder
+    """
     template = 'display.html'
     
     def get(self, request):
@@ -21,6 +25,9 @@ class Display(View):
 
 @login_required
 def download_csv(request):
+    """
+    download the data in csv format
+    """
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = "attachment; filename=data.csv"
     writer = csv.writer(response)

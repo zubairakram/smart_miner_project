@@ -31,6 +31,9 @@ class Loader(View):
                 fout.write(i)
 
     def post(self, request):
+        """
+        serves post request received from client
+        """
         form = self.form(request.POST, request.FILES)        
         self.__reset_context()
         self.context['form'] = form
@@ -45,20 +48,28 @@ class Loader(View):
             return render(request, self.template, self.context)
 
     def get(self, request):
-            form = self.form()
-            self.__reset_context()
-            self.context['form'] = form
-            return render(request, self.template, self.context)
-    
+        """
+        serves get request received from client
+        """        
+        form = self.form()
+        self.__reset_context()
+        self.context['form'] = form
+        return render(request, self.template, self.context)
+
     @staticmethod
     def read_csv():
-        'read csv file from media directory and return in the form of table'
+        """
+        read csv file from media directory and return in the form of table
+        """
         file = MEDIA_ROOT+"data.csv"
         with open(file) as fin:
             return list(csv.reader(fin))
     
     @staticmethod
     def write_csv(table):
+        """
+        writes data in the form of csv format
+        """
         file = MEDIA_ROOT + "data.csv"
         with open(file, 'w') as fout:
             csv_write = csv.writer(fout)

@@ -41,7 +41,7 @@ INSTALLED_APPS = (
     # third party apps
     'crispy_forms',
     
-    # my apps
+    # my app
     'smart_miner',
 )
 

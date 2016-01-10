@@ -10,16 +10,30 @@
 {% endblock %}
 
 {% block description %} 
-	<p>click below button to apply oneR algorithm for data classification</p>
+	<p>OneR algorithm is used to classification of the data set.
+	OneR mean one rule which means that it only choose a single predictor for
+	the classification</p>
 {% endblock %}
 
 {% block algo %}
-<div class="col-md-6">
 
-<form>
-	{% csrf_token %}
-	<input class="btn btn-primary" type="submit" value="Classify">
-</form>
-
-</div>
+	<div class="col-md-6">
+	
+	{% if not message %}
+	
+		<p>click below button to apply oneR algorithm for data classification</p>
+		
+		<form method="post" action="{% url 'classify' %}">
+			{% csrf_token %}
+			<input class="btn btn-primary btn-lg" type="submit" value="Classify">
+		</form>
+	
+	{% else %}
+		<!-- print result -->
+		{% for line in message %}
+			<p style="font-weight: bold;">{{ line }}</p>
+		{% endfor %}
+	
+	{% endif %}
+	</div>
 {% endblock %}

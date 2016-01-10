@@ -7,6 +7,10 @@ from smart_miner.views.missing import Miner
 
 
 class Binning(Miner):
+    """
+    binning algorithm implementation used to remove noise from data set.
+    """
+    
     def __init__(self, table):
         Miner.__init__(self, table)
     
@@ -15,7 +19,7 @@ class Binning(Miner):
         calculate bins and return a corrected row
         """
         row = [float(i) for i in row]
-        if max(row) > max_value or min(row) < min_value:            
+        if max(row) > max_value or min(row) < min_value:
             row_size = len(row)
             sorted_row = sorted(list(set(row)))
             bin_size = int(row_size / 2)
@@ -38,7 +42,7 @@ class Binning(Miner):
     
     def get_max_min(self, request_post):
         """
-        converts the request.POST dictionary to standard python dictionary
+        converts the request.POST data to standard python dictionary
         and make it use able.
         example: 
         request_post = {
@@ -76,6 +80,9 @@ class Binning(Miner):
         return fields
     
     def main(self, request_post):
+        '''
+        main implementation of binning algorithm on the data set.
+        '''
         heading = self.table[0]
         data = self.transpose(self.table[1:])
         
@@ -92,7 +99,9 @@ class Binning(Miner):
         for i in self.transpose(data):
             result.append(i)
         return result
-    
+
+# django view class use Binning algo for removing noise.
+
 class Noise(View):
     template = 'noise.html'
     
