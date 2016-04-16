@@ -1,0 +1,6 @@
+Object ID,Name,Age,Sex,Blood Pressure,Cholesterol in mg/dl,Chest pain type,Defect type,Diagnosis
+1,Konrad Black,31,male,130,NULL,NULL,NULL,NULL
+2,Konrad Black,31,male,130,331.2,1,normal,absent
+3,Magda Doe,26,female,115,NULL,4,fixed,present
+4,Magda Doe,26,female,115,407.5,NULL,NULL,NULL
+5,Anna White,56,female,120,45,2,normal,absent
